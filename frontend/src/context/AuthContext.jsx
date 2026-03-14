@@ -1,7 +1,7 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import { authService } from '../services/authService';
+import React, { createContext, useState, useContext, useEffect } from "react";
+import { authService } from "../services/authService";
 
-const AuthContext = createContext(null);
+export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -15,15 +15,17 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const login = (email, password, role) => {
-    const user = authService.login(email, password, role);
+  const login = async (email, password, role) => {
+    const user = await authService.login(email, password, role);
+
     if (user) {
       setCurrentUser(user);
     }
+
     return user;
   };
 
-  const signup = (name, email, password, role) => {
+  const signup = async (name, email, password, role) => {
     return authService.signup(name, email, password, role);
   };
 
